@@ -1,40 +1,68 @@
-# Rules to assign known controllers to user "gamepad",
+# Rules to assign known controllers and /dev/uinput to user "gamepad",
 # so that moltengamepad (which is run setuid gamepad) has rights on the device nodes
+#
+# The SUBSYSTEM!="hidraw" check is to prevent making the /dev/hidrawX device
+# corresponding to a controller accessible, because SDL supports hidraw
+# devices and will add them to the list of available controllers even if moltengamepad has made the
+# jsX and eventX device nodes inaccessible. In the future, moltengamepad should be
+# enhanced that it can find a corresponding hidraw device itself and hide/unhide it
+# alongside jsX and eventX.
 
-# ZD Gamepad in Android mode (when plugged in while Linux is running)
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="0079", ATTRS{idProduct}=="18ad", OWNER="gamepad", GROUP="input", MODE="0660"
+KERNEL=="uinput", OWNER="gamepad", MODE="0600"
 
-# Actual XBox 360 gamepad, ZD Gamepad in Windows mode (sometimes when pad is plugged in when machine is turned on)
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="028e", OWNER="gamepad", GROUP="input", MODE="0660"
+# ZD Gamepad in Android mode (when I plug it in while Linux is running)
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="0079", ATTRS{idProduct}=="18ad", OWNER="gamepad", GROUP="input", MODE="0660"
 
-# ZD Gamepad in Switch mode (sometimes when pad is plugged in when machine is turned on)
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="20d6", ATTRS{idProduct}=="a710", OWNER="gamepad", GROUP="input", MODE="0660"
+# Actual XBox 360 gamepad, ZD Gamepad in Windows mode (sometimes when pad is plugged in when I turn on the machine)
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="028e", OWNER="gamepad", GROUP="input", MODE="0660"
+
+# ZD Gamepad in Switch mode (sometimes when pad is plugged in when I turn on the machine)
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="20d6", ATTRS{idProduct}=="a710", OWNER="gamepad", GROUP="input", MODE="0660"
 
 # ZD Gamepad in PS3 mode
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="0079", ATTRS{idProduct}=="18aa", OWNER="gamepad", GROUP="input", MODE="0660"
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="0079", ATTRS{idProduct}=="18aa", OWNER="gamepad", GROUP="input", MODE="0660"
 
 # 8bitdo Gamepad in Switch mode
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="2009", OWNER="gamepad", GROUP="input", MODE="0660"
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="2009", OWNER="gamepad", GROUP="input", MODE="0660"
 
 # 8bitdo Gamepad in DirectInput mode
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="2dc8", ATTRS{idProduct}=="6001", OWNER="gamepad", GROUP="input", MODE="0660"
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="2dc8", ATTRS{idProduct}=="6001", OWNER="gamepad", GROUP="input", MODE="0660"
 
 # Thrustmaster
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b323", OWNER="gamepad", GROUP="input", MODE="0660"
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b323", OWNER="gamepad", GROUP="input", MODE="0660"
 
 # Mad Catz SFV Fightpad
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="0738", ATTRS{idProduct}=="8250", OWNER="gamepad", GROUP="input", MODE="0660"
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="0738", ATTRS{idProduct}=="8250", OWNER="gamepad", GROUP="input", MODE="0660"
 
 # Sony Dual Shock 4
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="09cc", OWNER="gamepad", GROUP="input", MODE="0660"
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="09cc", OWNER="gamepad", GROUP="input", MODE="0660"
 
 # retrolinc N64
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="0079", ATTRS{idProduct}=="0006", OWNER="gamepad", GROUP="input", MODE="0660"
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="0079", ATTRS{idProduct}=="0006", OWNER="gamepad", GROUP="input", MODE="0660"
 
-# Horipad for Switch
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="00c1", OWNER="gamepad", GROUP="input", MODE="0660"
+# Horipad für Switch
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="00c1", OWNER="gamepad", GROUP="input", MODE="0660"
+
+# Hori Fighting Commander Octa
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="0150", OWNER="gamepad", GROUP="input", MODE="0660"
+
+# Hori Fighting Stick Mini (PS5 mode)
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="01b3", OWNER="gamepad", GROUP="input", MODE="0660"
+
+# Hori Fighting Stick Mini (PS4)
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="01b4", OWNER="gamepad", GROUP="input", MODE="0660"
+
+# Hori Fighting Stick Mini (PC Mode)
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="01b5", OWNER="gamepad", GROUP="input", MODE="0660"
 
 # Dancepad
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="6677", ATTRS{idProduct}=="8811", OWNER="gamepad", GROUP="input", MODE="0660"
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="6677", ATTRS{idProduct}=="8811", OWNER="gamepad", GROUP="input", MODE="0660"
 
+# Microsoft Series S/X Controller
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="0b12", OWNER="gamepad", GROUP="input", MODE="0660"
 
+# Machenike G5 Pro Wired
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="0079", ATTRS{idProduct}=="181c", OWNER="gamepad", GROUP="input", MODE="0660"
+
+# Machenike G5 Pro Wireless Dongle
+SUBSYSTEMS=="usb", SUBSYSTEM!="hidraw", ATTRS{idVendor}=="2345", ATTRS{idProduct}=="e02e", OWNER="gamepad", GROUP="input", MODE="0660"

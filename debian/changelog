@@ -1,3 +1,14 @@
+moltengamepad-data (2024.11.24-msb1) UNRELEASED; urgency=medium
+
+  * New config: XBox Series S/X controller
+  * new config: Machenike G5 Pro
+  * new config: Dual Shock 4 with new kernel driver
+  * new config: Hori Fighting Stick Mini, Playstation edition
+  * New gendevice for ZD-C multi-system Gamepad in its Android mode
+  * new gendevice for ZD-C controller in its Switch mode
+
+ -- Matthias S. Benkmann <msb@winterdrache.de>  Sun, 24 Nov 2024 21:03:47 +0100
+
 moltengamepad-data (2020.11.01-msb1) unstable; urgency=medium
 
   * add Makefile with "debian" target
